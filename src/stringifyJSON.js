@@ -26,8 +26,14 @@ var stringifyJSON = function(obj) {
   if (typeof obj === 'object') {
    var str = '{';
    for (var key in obj) {
-    
+    if (obj[key] !== undefined && typeof obj[key] !== 'function') {
+      if (obj[key] !== obj[Object.keys(obj)[0]]) {
+        str = str.concat(',');
+      }
+      str = str.concat(stringifyJSON(key) + ':' + stringifyJSON(obj[key]));
+    }
    }
+   return str + '}';
   }
 
 
